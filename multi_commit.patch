@@ -1,0 +1,485 @@
+From cd2f880ac9533a9e5a75b4aecadfb2b4d66da039 Mon Sep 17 00:00:00 2001
+From: John Atkinson <johnatkinson2020@gmail.com>
+Date: Thu, 1 Jun 2023 14:45:22 -0400
+Subject: [PATCH 1/4] Going through first step of Task 1
+
+---
+ .idea/.gitignore                               |  8 ++++++++
+ .idea/forage-jpmc-swe-task-1.iml               | 14 ++++++++++++++
+ .idea/inspectionProfiles/profiles_settings.xml |  6 ++++++
+ .idea/misc.xml                                 |  4 ++++
+ .idea/modules.xml                              |  8 ++++++++
+ .idea/vcs.xml                                  |  6 ++++++
+ client3.py                                     |  6 ++++--
+ 7 files changed, 50 insertions(+), 2 deletions(-)
+ create mode 100644 .idea/.gitignore
+ create mode 100644 .idea/forage-jpmc-swe-task-1.iml
+ create mode 100644 .idea/inspectionProfiles/profiles_settings.xml
+ create mode 100644 .idea/misc.xml
+ create mode 100644 .idea/modules.xml
+ create mode 100644 .idea/vcs.xml
+
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+index 0000000..13566b8
+--- /dev/null
++++ b/.idea/.gitignore
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+diff --git a/.idea/forage-jpmc-swe-task-1.iml b/.idea/forage-jpmc-swe-task-1.iml
+new file mode 100644
+index 0000000..e679f2c
+--- /dev/null
++++ b/.idea/forage-jpmc-swe-task-1.iml
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.venv" />
++    </content>
++    <orderEntry type="jdk" jdkName="Python 3.9 (forage-jpmc-swe-task-1)" jdkType="Python SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++  <component name="PyDocumentationSettings">
++    <option name="format" value="PLAIN" />
++    <option name="myDocStringFormat" value="Plain" />
++  </component>
++</module>
+\ No newline at end of file
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+new file mode 100644
+index 0000000..105ce2d
+--- /dev/null
++++ b/.idea/inspectionProfiles/profiles_settings.xml
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+index 0000000..8ce3ade
+--- /dev/null
++++ b/.idea/misc.xml
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (forage-jpmc-swe-task-1)" project-jdk-type="Python SDK" />
++</project>
+\ No newline at end of file
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+index 0000000..973696f
+--- /dev/null
++++ b/.idea/modules.xml
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/forage-jpmc-swe-task-1.iml" filepath="$PROJECT_DIR$/.idea/forage-jpmc-swe-task-1.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+index 0000000..35eb1dd
+--- /dev/null
++++ b/.idea/vcs.xml
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/client3.py b/client3.py
+index 3fc09b7..b116e5c 100644
+--- a/client3.py
++++ b/client3.py
+@@ -35,14 +35,16 @@ def getDataPoint(quote):
+     stock = quote['stock']
+     bid_price = float(quote['top_bid']['price'])
+     ask_price = float(quote['top_ask']['price'])
+-    price = bid_price
++    price = (bid_price + ask_price / 2)
+     return stock, bid_price, ask_price, price
+ 
+ 
+ def getRatio(price_a, price_b):
+     """ Get ratio of price_a and price_b """
+     """ ------------- Update this function ------------- """
+-    return 1
++    """ Also create some unit tests for this function in client_test.py"""
++    
++    return price_a/price_b
+ 
+ 
+ # Main
+-- 
+2.39.2 (Apple Git-143)
+
+
+From edb0557eaf11859d83d4445a6fa95845f9262d0c Mon Sep 17 00:00:00 2001
+From: John Atkinson <johnatkinson2020@gmail.com>
+Date: Thu, 1 Jun 2023 15:24:45 -0400
+Subject: [PATCH 2/4] Finished the updating the file client3.py
+
+able to understand more the workings behind working with the Data structure dictionaries, in a real world example
+---
+ client3.py     | 11 +++++++++--
+ client_test.py | 16 +++++++++++++++-
+ 2 files changed, 24 insertions(+), 3 deletions(-)
+
+diff --git a/client3.py b/client3.py
+index b116e5c..997ac77 100644
+--- a/client3.py
++++ b/client3.py
+@@ -43,19 +43,26 @@ def getRatio(price_a, price_b):
+     """ Get ratio of price_a and price_b """
+     """ ------------- Update this function ------------- """
+     """ Also create some unit tests for this function in client_test.py"""
+-    
++    if (price_b == 0):
++        # when price_b is 0, avoid throwing ZeroDivisionError
++        return
+     return price_a/price_b
+ 
+ 
+ # Main
+ if __name__ == "__main__":
+     # Query the price once every N seconds.
++
++    # For every iteration, store datapoints from getDataPoint
++    # properly to call get Ratio & print right ratio
+     for _ in iter(range(N)):
+         quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
+ 
+         """ ----------- Update to get the ratio --------------- """
++        prices = {}
+         for quote in quotes:
+             stock, bid_price, ask_price, price = getDataPoint(quote)
++            prices[stock] = price
+             print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
+ 
+-        print("Ratio %s" % getRatio(price, price))
++        print("Ratio %s" % getRatio(prices["ABC"], prices["DEF"]))
+diff --git a/client_test.py b/client_test.py
+index af2bf26..aa1dfb0 100644
+--- a/client_test.py
++++ b/client_test.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from client3 import getDataPoint
++from client3 import getDataPoint, getRatio
+ 
+ class ClientTest(unittest.TestCase):
+   def test_getDataPoint_calculatePrice(self):
+@@ -19,6 +19,20 @@ class ClientTest(unittest.TestCase):
+ 
+   """ ------------ Add more unit tests ------------ """
+ 
++  def test_getDataPoint_(self):
++
++  def test_getDataPoint_(self):
++
++
++
++  def test_getRatio_(self):
++
++  def test_getRatio_(self):
++
++  def test_getRatio_(self):
++
++  def test_getRatio_(self):
++
+ 
+ 
+ if __name__ == '__main__':
+-- 
+2.39.2 (Apple Git-143)
+
+
+From 072b106c2b1347ee9383693f6684324f05c04e74 Mon Sep 17 00:00:00 2001
+From: John Atkinson <johnatkinson2020@gmail.com>
+Date: Thu, 1 Jun 2023 17:11:11 -0400
+Subject: [PATCH 3/4] Finished writing Test cases
+
+---
+ .DS_Store      | Bin 0 -> 6148 bytes
+ client3.py     |   4 +--
+ client_test.py |  86 ++++++++++++++++++++++++++++++++++++++-----------
+ 3 files changed, 69 insertions(+), 21 deletions(-)
+ create mode 100644 .DS_Store
+
+diff --git a/.DS_Store b/.DS_Store
+new file mode 100644
+index 0000000000000000000000000000000000000000..5008ddfcf53c02e82d7eee2e57c38e5672ef89f6
+GIT binary patch
+literal 6148
+zcmeH~Jr2S!425mzP>H1@V-^m;4Wg<&0T*E43hX&L&p$$qDprKhvt+--jT7}7np#A3
+zem<@ulZcFPQ@L2!n>{z**<q8>++&mCkOWA81W14cNZ<zv;LbK1Poaz?KmsK2CSc!(
+z0ynLxE!0092;Krf2c+FF_Fe*7ECH>lEfg7;MkzE(HCqgga^y>{tEnwC%0;vJ&^%eQ
+zLs35+`xjp>T0<F0fCPF1$Cyrb|F7^5{eNG?83~ZUUlGt@xh*qZDeu<Z%US-OSsOPv
+j)R!Z4KLME7ReXlK;d!wEw5GODWMKRea10D2@KpjYNUI8I
+
+literal 0
+HcmV?d00001
+
+diff --git a/client3.py b/client3.py
+index 997ac77..2de9866 100644
+--- a/client3.py
++++ b/client3.py
+@@ -35,7 +35,7 @@ def getDataPoint(quote):
+     stock = quote['stock']
+     bid_price = float(quote['top_bid']['price'])
+     ask_price = float(quote['top_ask']['price'])
+-    price = (bid_price + ask_price / 2)
++    price = (bid_price + ask_price) / 2
+     return stock, bid_price, ask_price, price
+ 
+ 
+@@ -46,7 +46,7 @@ def getRatio(price_a, price_b):
+     if (price_b == 0):
+         # when price_b is 0, avoid throwing ZeroDivisionError
+         return
+-    return price_a/price_b
++    return price_a / price_b
+ 
+ 
+ # Main
+diff --git a/client_test.py b/client_test.py
+index aa1dfb0..bd761e3 100644
+--- a/client_test.py
++++ b/client_test.py
+@@ -1,38 +1,86 @@
+ import unittest
+ from client3 import getDataPoint, getRatio
+ 
++
+ class ClientTest(unittest.TestCase):
+-  def test_getDataPoint_calculatePrice(self):
+-    quotes = [
+-      {'top_ask': {'price': 121.2, 'size': 36}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 120.48, 'size': 109}, 'id': '0.109974697771', 'stock': 'ABC'},
+-      {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+-    ]
+-    """ ------------ Add the assertion below ------------ """
++    def test_getDataPoint_calculatePrice(self):
++        quotes = [
++            {'top_ask': {'price': 121.2, 'size': 36}, 'timestamp': '2019-02-11 22:06:30.572453',
++             'top_bid': {'price': 120.48, 'size': 109}, 'id': '0.109974697771', 'stock': 'ABC'},
++            {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453',
++             'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
++        ]
++        """ ------------ Add the assertion below ------------ """
++        stock, bid_price, ask_price, price = getDataPoint(quotes[0])
+ 
+-  def test_getDataPoint_calculatePriceBidGreaterThanAsk(self):
+-    quotes = [
+-      {'top_ask': {'price': 119.2, 'size': 36}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 120.48, 'size': 109}, 'id': '0.109974697771', 'stock': 'ABC'},
+-      {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+-    ]
+-    """ ------------ Add the assertion below ------------ """
++        expected_bid_price = 120.48
++        expected_ask_price = 121.2
+ 
++        expected_price = (expected_ask_price + expected_bid_price) / 2
++        self.assertEqual(bid_price, expected_bid_price, "Incorrect bid price")
++        self.assertEqual(ask_price, expected_ask_price, "Incorrect ask price")
++        self.assertEqual(price, expected_price, "Incorrect price calculation")
+ 
+-  """ ------------ Add more unit tests ------------ """
++    def test_getDataPoint_calculatePriceBidGreaterThanAsk(self):
++        quotes = [
++            {'top_ask': {'price': 119.2, 'size': 36}, 'timestamp': '2019-02-11 22:06:30.572453',
++             'top_bid': {'price': 120.48, 'size': 109}, 'id': '0.109974697771', 'stock': 'ABC'},
++            {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453',
++             'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
++        ]
++        """ ------------ Add the assertion below ------------ """
++        stock, bid_price, ask_price, price = getDataPoint(quotes[0])
+ 
+-  def test_getDataPoint_(self):
++        expected_bid_price = 120.48
++        expected_ask_price = 119.2
+ 
+-  def test_getDataPoint_(self):
++        self.assertEqual(bid_price, expected_bid_price, "Incorrect bid price")
++        self.assertEqual(ask_price, expected_ask_price, "Incorrect ask price")
++        self.assertGreater(bid_price, ask_price, "Bid price is not greater than ask price")
+ 
++    def test_getDataPoint_calculatePriceBidLessThanAsk(self):
++        quotes = [
++            {'top_ask': {'price': 127.6, 'size': 36}, 'timestamp': '2019-02-11 22:06:30.572453',
++             'top_bid': {'price': 122.89, 'size': 109}, 'id': '0.109974697771', 'stock': 'ABC'},
++            {'top_ask': {'price': 124.98, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453',
++             'top_bid': {'price': 118.34, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
++        ]
++        stock, bid_price, ask_price, price = getDataPoint(quotes[1])
+ 
++        expected_bid_price = 118.34
++        expected_ask_price = 124.98
+ 
+-  def test_getRatio_(self):
++        self.assertEqual(bid_price, expected_bid_price, "Incorrect bid price")
++        self.assertEqual(ask_price, expected_ask_price, "Incorrect ask price")
++        self.assertLess(bid_price, ask_price, "Bid price is not greater than ask price")
+ 
+-  def test_getRatio_(self):
++    def test_getRatio_positiveIntegers(self):
++        price_a = 10
++        price_b = 5
++        expected_ratio = price_a / price_b
++        ratio = getRatio(price_a, price_b)
++        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
+ 
+-  def test_getRatio_(self):
++    def test_getRatio_priceAZero(self):
++        price_a = 0
++        price_b = 5
++        expected_ratio = price_a / price_b
++        ratio = getRatio(price_a, price_b)
++        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
+ 
+-  def test_getRatio_(self):
++    def test_getRatio_priceBZero(self):
++        price_a = 10
++        price_b = 0
++        expected_ratio = None  # Can't divide by Zero, avoid throwing ZeroDivisionError
++        ratio = getRatio(price_a, price_b)
++        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
+ 
++    def test_getRatio_negativeIntegers(self):
++        price_a = -10
++        price_b = -5
++        expected_ratio = price_a / price_b
++        ratio = getRatio(price_a, price_b)
++        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
+ 
+ 
+ if __name__ == '__main__':
+-- 
+2.39.2 (Apple Git-143)
+
+
+From c3646a4ad0cc45ffd7c283f30ab59a22ab62ad63 Mon Sep 17 00:00:00 2001
+From: John Atkinson <johnatkinson2020@gmail.com>
+Date: Thu, 1 Jun 2023 17:31:35 -0400
+Subject: [PATCH 4/4] Updated Test cases
+
+Looking at the comments for how they implemented test cases, I was able to better understand ways to implement them, simplifying my code
+---
+ client_test.py | 58 +++++++++++++++-----------------------------------
+ 1 file changed, 17 insertions(+), 41 deletions(-)
+
+diff --git a/client_test.py b/client_test.py
+index bd761e3..86c09f8 100644
+--- a/client_test.py
++++ b/client_test.py
+@@ -11,15 +11,9 @@ class ClientTest(unittest.TestCase):
+              'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+         ]
+         """ ------------ Add the assertion below ------------ """
+-        stock, bid_price, ask_price, price = getDataPoint(quotes[0])
+-
+-        expected_bid_price = 120.48
+-        expected_ask_price = 121.2
+-
+-        expected_price = (expected_ask_price + expected_bid_price) / 2
+-        self.assertEqual(bid_price, expected_bid_price, "Incorrect bid price")
+-        self.assertEqual(ask_price, expected_ask_price, "Incorrect ask price")
+-        self.assertEqual(price, expected_price, "Incorrect price calculation")
++        for quote in quotes:
++            self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'],
++                                                   (quote['top_bid']['price'] + quote['top_ask']['price'])/2))
+ 
+     def test_getDataPoint_calculatePriceBidGreaterThanAsk(self):
+         quotes = [
+@@ -29,14 +23,9 @@ class ClientTest(unittest.TestCase):
+              'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+         ]
+         """ ------------ Add the assertion below ------------ """
+-        stock, bid_price, ask_price, price = getDataPoint(quotes[0])
+-
+-        expected_bid_price = 120.48
+-        expected_ask_price = 119.2
+-
+-        self.assertEqual(bid_price, expected_bid_price, "Incorrect bid price")
+-        self.assertEqual(ask_price, expected_ask_price, "Incorrect ask price")
+-        self.assertGreater(bid_price, ask_price, "Bid price is not greater than ask price")
++        for quote in quotes:
++            self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'],
++                                                   (quote['top_bid']['price'] + quote['top_ask']['price']) / 2))
+ 
+     def test_getDataPoint_calculatePriceBidLessThanAsk(self):
+         quotes = [
+@@ -45,42 +34,29 @@ class ClientTest(unittest.TestCase):
+             {'top_ask': {'price': 124.98, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453',
+              'top_bid': {'price': 118.34, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+         ]
+-        stock, bid_price, ask_price, price = getDataPoint(quotes[1])
+-
+-        expected_bid_price = 118.34
+-        expected_ask_price = 124.98
+-
+-        self.assertEqual(bid_price, expected_bid_price, "Incorrect bid price")
+-        self.assertEqual(ask_price, expected_ask_price, "Incorrect ask price")
+-        self.assertLess(bid_price, ask_price, "Bid price is not greater than ask price")
++        for quote in quotes:
++            self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'],
++                                                   (quote['top_bid']['price'] + quote['top_ask']['price']) / 2))
+ 
+     def test_getRatio_positiveIntegers(self):
+-        price_a = 10
+-        price_b = 5
++        price_a, price_b = 10, 5
+         expected_ratio = price_a / price_b
+-        ratio = getRatio(price_a, price_b)
+-        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
++        self.assertEqual(getRatio(price_a, price_b), expected_ratio, "Incorrect ratio calculation")
+ 
+     def test_getRatio_priceAZero(self):
+-        price_a = 0
+-        price_b = 5
++        price_a, price_b = 0, 5
+         expected_ratio = price_a / price_b
+-        ratio = getRatio(price_a, price_b)
+-        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
++        self.assertEqual(getRatio(price_a, price_b), expected_ratio, "Incorrect ratio calculation")
+ 
+     def test_getRatio_priceBZero(self):
+-        price_a = 10
+-        price_b = 0
++        price_a, price_b = 10, 0
+         expected_ratio = None  # Can't divide by Zero, avoid throwing ZeroDivisionError
+-        ratio = getRatio(price_a, price_b)
+-        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
++        self.assertEqual(getRatio(price_a, price_b), expected_ratio, "Incorrect ratio calculation")
+ 
+     def test_getRatio_negativeIntegers(self):
+-        price_a = -10
+-        price_b = -5
++        price_a, price_b = -10, -5
+         expected_ratio = price_a / price_b
+-        ratio = getRatio(price_a, price_b)
+-        self.assertEqual(ratio, expected_ratio, "Incorrect ratio calculation")
++        self.assertEqual(getRatio(price_a, price_b), expected_ratio, "Incorrect ratio calculation")
+ 
+ 
+ if __name__ == '__main__':
+-- 
+2.39.2 (Apple Git-143)
+
